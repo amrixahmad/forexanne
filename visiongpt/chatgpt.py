@@ -6,7 +6,7 @@ load_dotenv()
 
 openai.api_key=os.getenv("OPENAI_API_KEY")
 
-def visiongpt_response(trade_ss,question):
+def visiongpt_response(trade_ss,question=""):
     response = openai.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
@@ -23,7 +23,15 @@ def visiongpt_response(trade_ss,question):
             ],
             }
         ],
-        max_tokens=2000,
+        max_tokens=500,
         )
 
     return response.choices[0].message.content
+
+def chatgpt_response(message):
+    completion = openai.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": message}]
+        )
+
+    return completion.choices[0].message.content
