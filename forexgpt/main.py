@@ -31,7 +31,7 @@ async def on_ready():
 
 @client.tree.command(name="visionanne",description="send Forex Anne your trade screenshot and question :)")
 @app_commands.describe(trade_ss="Send me your trade screenshot and I will analyze it for you. You can also ask me a question about it if you want :)")
-async def visionanne(interaction: Interaction,trade_ss: discord.Attachment,question: str="give me a brief summary of this chart based on price action"):
+async def forexanne(interaction: Interaction,trade_ss: discord.Attachment,question: str="give me a brief summary of this chart based on price action"):
     await interaction.response.defer()
     # await asyncio.sleep(delay=6)    
     image_file = await trade_ss.to_file()
