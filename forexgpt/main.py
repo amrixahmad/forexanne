@@ -9,7 +9,7 @@ from chatgpt import visiongpt_response,chatgpt_response
 
 load_dotenv()
 
-FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
+FOREXANNE_TOKEN=os.getenv("FOREXANNE_TOKEN")
 
 client = commands.Bot(command_prefix=".",intents=discord.Intents.all())
 
@@ -40,12 +40,13 @@ async def forexanne(interaction: Interaction,forex_prompt: str):
     await interaction.followup.send(chatgpt_response(forex_prompt))
 
 @client.tree.command(name="visionanne",description="send Forex Anne your trade screenshot and question :)")
-@app_commands.describe(trade_ss="Send me your trade screenshot and question")
-async def visionanne(interaction: Interaction,trade_ss: discord.Attachment,forex_prompt: str):
-    # await interaction.response.send_message(trade_ss)
+@app_commands.describe(trade_ss="Send me your trade screenshot and I will analyze it for you. You can also ask me a question about it if you want :)")
+async def visionanne(interaction: Interaction,trade_ss: discord.Attachment,question: str="give me a brief summary of this chart based on price action"):
     await interaction.response.defer()
     # await asyncio.sleep(delay=6)    
-    await interaction.followup.send(content=visiongpt_response(trade_ss.url,forex_prompt))
+    image_file = await trade_ss.to_file()
+    content = visiongpt_response(trade_ss.url,question)
+    await interaction.followup.send(content=content,file=image_file)
 
 
 # @client.event
@@ -59,4 +60,4 @@ async def visionanne(interaction: Interaction,trade_ss: discord.Attachment,forex
 #     else:
 #         await message.channel.send(chatgpt_response(message.content))
 
-client.run(FOREXANNETEST_TOKEN)
+client.run(FOREXANNE_TOKEN)

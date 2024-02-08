@@ -1,4 +1,5 @@
 import openai
+import discord
 from dotenv import load_dotenv
 import os
 
@@ -6,7 +7,7 @@ load_dotenv()
 
 openai.api_key=os.getenv("OPENAI_API_KEY")
 
-def visiongpt_response(trade_ss,question=""):
+def visiongpt_response(trade_ss,question="give me a brief summary of this chart based on price action"):
     response = openai.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
