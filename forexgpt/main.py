@@ -8,7 +8,13 @@ from chatgpt import visiongpt_response,chatgpt_response
 
 load_dotenv()
 
-FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
+def is_test(test=bool):
+    FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
+    FOREXANNE_TOKEN=os.getenv("FOREXANNE_TOKEN")
+    if test:
+        return FOREXANNETEST_TOKEN
+    else:
+        return FOREXANNE_TOKEN
 
 client = commands.Bot(command_prefix=".",intents=discord.Intents.all())
 
@@ -38,4 +44,4 @@ async def forexanne(interaction: Interaction,trade_ss: discord.Attachment=None,q
         content = visiongpt_response(trade_ss.url,question)
         await interaction.followup.send(content=content,file=image_file)
 
-client.run(FOREXANNETEST_TOKEN)
+client.run(is_test(test=False))
