@@ -2,11 +2,15 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from discord import Interaction
+from discord import Message
 from dotenv import load_dotenv
 import os
 from chatgpt import visiongpt_response,chatgpt_response
 
 load_dotenv()
+
+forexanne_channel_id=1202078107046264884
+scalping_coach_id=1199171759392444547
 
 def is_test(test=bool):
     FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
@@ -33,6 +37,7 @@ async def textanne(interaction: Interaction,forex_prompt: str):
 
 @client.tree.command(name="forexanne",description="send Forex Anne your trade screenshot and question :)")
 @app_commands.describe(trade_ss="Send me your trade screenshot and I will analyze it for you. You can also ask me a question about it if you want :)")
+@app_commands.describe(question="Ask me anything about forex price action trading :)")
 async def forexanne(interaction: Interaction,trade_ss: discord.Attachment=None,question: str=""):
     
     if trade_ss is None:
@@ -43,5 +48,20 @@ async def forexanne(interaction: Interaction,trade_ss: discord.Attachment=None,q
         image_file = await trade_ss.to_file()
         content = visiongpt_response(trade_ss.url,question)
         await interaction.followup.send(content=content,file=image_file)
+
+@client.event
+async def on_message(message):
+    
+    if message.author==client.user:
+        return
+
+    if message.channel.id==scalping_coach_id or message.channel.id==forexanne_channel_id:
+        # print(message.content)
+        # print(message.channel.id)
+        if message.attachments:
+            await message.channel.send(visiongpt_response(message.attachments[0].url,message.content))
+        else:
+            await message.channel.send(chatgpt_response(message.content))
+
 
 client.run(is_test(test=False))
