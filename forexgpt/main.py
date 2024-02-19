@@ -84,4 +84,4 @@ async def on_message(message):
             await message.channel.send(chatgpt_response(message.content))
 
 
-client.run(is_test(test=True))
+client.run(is_test(test=False))
