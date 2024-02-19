@@ -6,6 +6,7 @@ from discord import Message
 from dotenv import load_dotenv
 import os
 from chatgpt import visiongpt_response,chatgpt_response
+from cmi_signals import send_signal
 
 load_dotenv()
 
@@ -49,6 +50,25 @@ async def forexanne(interaction: Interaction,trade_ss: discord.Attachment=None,q
         content = visiongpt_response(trade_ss.url,question)
         await interaction.followup.send(content=content,file=image_file)
 
+@client.tree.command(name="cmi_signals",description="send signals to any channel")
+async def cmi_signals(    
+    interaction: Interaction,
+    sl: str,
+    tp1: str,
+    tp2: str,
+    tp3: str,
+    max_tp: str,
+    cl: str,
+    buy: str="",
+    sell: str=""
+    ):
+    if buy:
+        buy_signal=send_signal(sl=sl,tp1=tp1,tp2=tp2,tp3=tp3,max_tp=max_tp,cl=cl,buy=buy)
+        await interaction.response.send_message(buy_signal)
+    if sell:
+        sell_signal=send_signal(sl=sl,tp1=tp1,tp2=tp2,tp3=tp3,max_tp=max_tp,cl=cl,sell=sell)
+        await interaction.response.send_message(sell_signal)
+
 @client.event
 async def on_message(message):
     
@@ -64,4 +84,4 @@ async def on_message(message):
             await message.channel.send(chatgpt_response(message.content))
 
 
-client.run(is_test(test=False))
+client.run(is_test(test=True))
