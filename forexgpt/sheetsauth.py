@@ -72,5 +72,6 @@ def main():
 
 
 if __name__ == "__main__":
-  # print(get_credentials())
-  main()
+  creds=SheetsAuth(scopes=SCOPES).get_credentials()
+  print(creds)
+  # main()
