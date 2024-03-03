@@ -2,16 +2,18 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from discord import Interaction
-from discord import Message
 from dotenv import load_dotenv
 import os
-from chatgpt import visiongpt_response,chatgpt_response
+from chatgpt import visiongpt_response,chatgpt_response,visiongpt_journal
 from cmi_signals import send_signal
+from dailytrades import DailyTrades,channel_ids
+from sheetsauth import SheetsAuth
 
 load_dotenv()
 
 forexanne_channel_id=1202078107046264884
 scalping_coach_id=1199171759392444547
+amri_test_id=1202207157198524486
 
 def is_test(test=bool):
     FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
@@ -83,5 +85,45 @@ async def on_message(message):
         else:
             await message.channel.send(chatgpt_response(message.content))
 
+    if any(d['value'] == message.channel.id for d in channel_ids if 'value' in d):
+        daily_trades=DailyTrades(creds=SheetsAuth().authorize())
+        # Get channel ID and name
+        channel_id = message.channel.id
+        channel_name = message.channel.name
+        if message.attachments:
+            for attachment in message.attachments:
+                if any(attachment.filename.lower().endswith(image_ext) for image_ext in ['.png', '.jpg', '.jpeg', '.gif']):
+                    # Upload to Google Drive
+                    file_id,link=daily_trades.upload_image_from_url(attachment.url)
+                    journal_entry=visiongpt_journal(message.attachments[0].url)
+                    daily_trades.add_student_roadmap_row(
+                        str(message.author),
+                        str(channel_id),
+                        channel_name,
+                        file_id,
+                        link,  # Link to the uploaded file
+                        journal_entry
+                    )
+    
+    if message.channel.id==amri_test_id:
+        daily_trades=DailyTrades(creds=SheetsAuth().authorize())
+        # Get channel ID and name
+        channel_id = message.channel.id
+        channel_name = message.channel.name
+        if message.attachments:
+            for attachment in message.attachments:
+                if any(attachment.filename.lower().endswith(image_ext) for image_ext in ['.png', '.jpg', '.jpeg', '.gif']):
+                    # Upload to Google Drive
+                    file_id,link=daily_trades.upload_image_from_url(attachment.url)
+                    journal_entry=visiongpt_journal(message.attachments[0].url)
+                    daily_trades.add_student_roadmap_row(
+                        str(message.author),
+                        str(channel_id),
+                        channel_name,
+                        file_id,
+                        link,  # Link to the uploaded file
+                        journal_entry
+                    )
 
-client.run(is_test(test=False))
+
+client.run(is_test(test=True))

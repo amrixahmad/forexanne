@@ -9,15 +9,16 @@ import os
 
 load_dotenv()
 
-SCOPES=os.getenv("SCOPES")
-
 # The ID and range of a sample spreadsheet.
 ROADMAP_SPREADSHEET_ID = "1ML4O-1XEMR2OU-G_9JZ_nDo8LhmquILFImpX-pspBgI"
 SAMPLE_RANGE_NAME = "Sheet1!A1:D1"
 
+def get_scopes():
+  with open("forexgpt/scopes.txt") as scopes_file:
+    return scopes_file.read().split(",")
 
 class SheetsAuth:
-  def __init__(self,scopes) -> None:
+  def __init__(self,scopes=get_scopes()) -> None:  
     self.scopes=scopes
     self.ROADMAP_SPREADSHEET_ID=ROADMAP_SPREADSHEET_ID
     self.SAMPLE_RANGE_NAME=SAMPLE_RANGE_NAME
@@ -42,11 +43,16 @@ class SheetsAuth:
       # Save the credentials for the next run
       with open("forexgpt/token.json", "w") as token:
         token.write(creds.to_json())
+    
+  def authorize(self):
+    if os.path.exists("forexgpt/token.json"):
+      return Credentials.from_authorized_user_file("forexgpt/token.json", self.scopes)
 
 def main():
-  sheetAuth=SheetsAuth(scopes=SCOPES)
+  sheetAuth=SheetsAuth(scopes=get_scopes())
+  sheetAuth.get_credentials()
   try:
-      service = build("sheets", "v4", credentials=sheetAuth.get_credentials())
+      service = build("sheets", "v4", credentials=sheetAuth.authorize())
 
       # Call the Sheets API
       sheet = service.spreadsheets()
@@ -72,6 +78,7 @@ def main():
 
 
 if __name__ == "__main__":
-  creds=SheetsAuth(scopes=SCOPES).get_credentials()
-  print(creds)
-  # main()
+  # creds=SheetsAuth(scopes=SCOPES).get_credentials()
+  main()
+  # print(get_scopes())
+  
