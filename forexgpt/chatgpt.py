@@ -9,6 +9,7 @@ openai.api_key=os.getenv("OPENAI_API_KEY")
 
 prompt = Prompt()
 base_prompt = prompt.return_base_prompt()
+journal_prompt=prompt.return_journal_prompt()
 
 def visiongpt_response(trade_ss,question=base_prompt):
     prompt = base_prompt + question
@@ -20,6 +21,29 @@ def visiongpt_response(trade_ss,question=base_prompt):
             "role": "user",
             "content": [
                 {"type": "text", "text": prompt},
+                {
+                "type": "image_url",
+                "image_url": {
+                    "url": trade_ss,
+                },
+                },
+            ],
+            }
+        ],
+        max_tokens=500,
+        )
+    # print(prompt)
+    return response.choices[0].message.content
+
+def visiongpt_journal(trade_ss):
+
+    response = openai.chat.completions.create(
+        model="gpt-4-vision-preview",
+        messages=[
+            {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": journal_prompt},
                 {
                 "type": "image_url",
                 "image_url": {
