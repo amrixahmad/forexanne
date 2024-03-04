@@ -108,4 +108,4 @@ async def on_message(message):
                     )
                     await message.channel.send(f"Thank you, {message.author} I have written a journal entry for you :)")
 
-client.run(is_test(test=False))
+client.run(is_test(test=True))
