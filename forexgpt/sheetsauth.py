@@ -13,12 +13,10 @@ load_dotenv()
 ROADMAP_SPREADSHEET_ID = "1ML4O-1XEMR2OU-G_9JZ_nDo8LhmquILFImpX-pspBgI"
 SAMPLE_RANGE_NAME = "Sheet1!A1:D1"
 
-def get_scopes():
-  with open("/forexgpt/scopes.txt") as scopes_file:
-    return scopes_file.read().split(",")
+SCOPES=["https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive"]
 
 class SheetsAuth:
-  def __init__(self,scopes=get_scopes()) -> None:  
+  def __init__(self,scopes=SCOPES) -> None:  
     self.scopes=scopes
     self.ROADMAP_SPREADSHEET_ID=ROADMAP_SPREADSHEET_ID
     self.SAMPLE_RANGE_NAME=SAMPLE_RANGE_NAME
