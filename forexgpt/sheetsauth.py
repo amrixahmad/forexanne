@@ -47,7 +47,7 @@ class SheetsAuth:
       return Credentials.from_authorized_user_file("forexgpt/token.json", self.scopes)
 
 def main():
-  sheetAuth=SheetsAuth(scopes=get_scopes())
+  sheetAuth=SheetsAuth(scopes=SCOPES)
   sheetAuth.get_credentials()
   try:
       service = build("sheets", "v4", credentials=sheetAuth.authorize())

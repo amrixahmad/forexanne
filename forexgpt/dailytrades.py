@@ -2,7 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.http import MediaIoBaseUpload
-from sheetsauth import SheetsAuth,get_scopes
+from sheetsauth import SheetsAuth,SCOPES
 from dotenv import load_dotenv
 import os
 import requests
@@ -143,7 +143,7 @@ class DailyTrades:
 
 if __name__ == "__main__":
   test_file_id="1oTm4UMhswl8Jo-wKT4PJlnwWuR3p1mhO"
-  sheetsAuth=SheetsAuth(scopes=get_scopes())
+  sheetsAuth=SheetsAuth(scopes=SCOPES)
   creds=sheetsAuth.authorize()
   img_url="https://cdn.discordapp.com/attachments/1199171759392444547/1213836725458313286/The_Thriving_Introvert_Facebook_Ad.jpeg"
   
