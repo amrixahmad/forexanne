@@ -10,7 +10,6 @@ from io import BytesIO
 from datetime import datetime
 import pytz
 
-
 load_dotenv()
 
 ROADMAP_SPREADSHEET_ID="1ML4O-1XEMR2OU-G_9JZ_nDo8LhmquILFImpX-pspBgI"
@@ -18,8 +17,10 @@ ROADMAP_FOLDER_ID="1xB1hOkmQJ7pD__P4r7e7cC4fFfw9QH3i"
 ROADMAP_DAILY_SUBMISSIONS_FOLDER_ID="1HGKuTxHK8Wn7MTKonoRCNRVBPoWI4VvQ"
 
 channel_ids=[
-        {"name":"forexanne_channel_id","value":1202078107046264884},
+        {"name":"student_trade_ideas_id","value":1197471105162694666},
+        {"name":"trade_results_id","value":1203935782230822942},
         {"name":"scalping_coach_id","value":1199171759392444547},
+        {"name":"amri_test_id","value":1202207157198524486},
         {"name":"semester_1_id","value":1197470569399074826},
         {"name":"semester_2_id","value":1197470654816063538},
         {"name":"semester_3_id","value":1197470685908447262},
