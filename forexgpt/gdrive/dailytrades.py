@@ -2,7 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from googleapiclient.http import MediaIoBaseUpload
-from sheetsauth import SheetsAuth,SCOPES
+from .sheetsauth import SheetsAuth,SCOPES
 from dotenv import load_dotenv
 import os
 import requests

@@ -16,7 +16,7 @@ SAMPLE_RANGE_NAME = "Sheet1!A1:D1"
 SCOPES=["https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive"]
 
 class SheetsAuth:
-  def __init__(self,scopes=SCOPES) -> None:  
+  def __init__(self,scopes) -> None:  
     self.scopes=scopes
     self.ROADMAP_SPREADSHEET_ID=ROADMAP_SPREADSHEET_ID
     self.SAMPLE_RANGE_NAME=SAMPLE_RANGE_NAME
@@ -26,8 +26,8 @@ class SheetsAuth:
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists("forexgpt/token.json"):
-      return Credentials.from_authorized_user_file("forexgpt/token.json", self.scopes)
+    if os.path.exists("forexgpt/gdrive/token.json"):
+      return Credentials.from_authorized_user_file("forexgpt/gdrive/token.json", self.scopes)
     
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
@@ -35,16 +35,16 @@ class SheetsAuth:
         creds.refresh(Request())
       else:
         flow = InstalledAppFlow.from_client_secrets_file(
-            "forexgpt/credentials.json", self.scopes
+            "forexgpt/gdrive/credentials.json", self.scopes
         )
         creds = flow.run_local_server(port=0)
       # Save the credentials for the next run
-      with open("forexgpt/token.json", "w") as token:
+      with open("forexgpt/gdrive/token.json", "w") as token:
         token.write(creds.to_json())
     
   def authorize(self):
-    if os.path.exists("forexgpt/token.json"):
-      return Credentials.from_authorized_user_file("forexgpt/token.json", self.scopes)
+    if os.path.exists("forexgpt/gdrive/token.json"):
+      return Credentials.from_authorized_user_file("forexgpt/gdrive/token.json", self.scopes)
 
 def main():
   sheetAuth=SheetsAuth(scopes=SCOPES)
@@ -79,5 +79,6 @@ if __name__ == "__main__":
   # creds=SheetsAuth(scopes=SCOPES).get_credentials()
   # main()
   # print(get_scopes())
+  # print(os.path.abspath(os.getcwd()))
   pass
   

@@ -11,7 +11,7 @@ def send_signal(
     
     start_signal = "Follow signal:"
     signal_buy = f"\nBuy: {buy}"
-    signal_sell = f"Sell: {sell}"
+    signal_sell = f"\nSell: {sell}"
     base_signal = f'''                    
                     Stop Loss: {sl}
                     Take Profit: {tp1}
@@ -20,12 +20,12 @@ def send_signal(
                     Max Take Profit: {max_tp}
                     Cut Loss: {cl}
                     
-                    ✅Take care of money management
-                    ✅Must layer with  gap for  3-5 pips
-                    ✅Remember always close Early Layers
-                    ✅If price goes deep you can still entry
-                    ✅If price goes 10-15 pips can set BE
-                    ✅Always Entry in the zone if Early
+                    ✅ Take care of money management
+                    ✅ Must layer with  gap for  3-5 pips
+                    ✅ Remember always close Early Layers
+                    ✅ If price goes deep you can still entry
+                    ✅ If price goes 10-15 pips can set BE
+                    ✅ Always Entry in the zone if Early
                 '''
     
     if buy:
