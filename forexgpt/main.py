@@ -102,7 +102,7 @@ async def on_message(message):
     if message.author==client.user:
         return
 
-    if message.channel.id==forexanne_channel_id or scalping_coach_id:
+    if message.channel.id==forexanne_channel_id or message.channel.id==scalping_coach_id:
         # print(message.content)
         # print(message.channel.id)
         if message.attachments:
