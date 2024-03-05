@@ -19,7 +19,7 @@ ROADMAP_DAILY_SUBMISSIONS_FOLDER_ID="1HGKuTxHK8Wn7MTKonoRCNRVBPoWI4VvQ"
 channel_ids=[
         {"name":"student_trade_ideas_id","value":1197471105162694666},
         {"name":"trade_results_id","value":1203935782230822942},
-        {"name":"scalping_coach_id","value":1199171759392444547},
+        # {"name":"scalping_coach_id","value":1199171759392444547},
         {"name":"amri_test_id","value":1202207157198524486},
         {"name":"semester_1_id","value":1197470569399074826},
         {"name":"semester_2_id","value":1197470654816063538},

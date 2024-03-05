@@ -13,6 +13,7 @@ from sheetsauth import SheetsAuth
 load_dotenv()
 
 forexanne_channel_id=1202078107046264884
+scalping_coach_id=1199171759392444547
 
 def is_test(test=bool):
     FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
@@ -77,7 +78,7 @@ async def on_message(message):
     if message.author==client.user:
         return
 
-    if message.channel.id==forexanne_channel_id:
+    if message.channel.id==forexanne_channel_id or scalping_coach_id:
         # print(message.content)
         # print(message.channel.id)
         if message.attachments:
@@ -108,4 +109,4 @@ async def on_message(message):
                     )
                     await message.channel.send(f"Thank you, {message.author} I have written a journal entry for you :)")
 
-client.run(is_test(test=True))
+client.run(is_test(test=False))
