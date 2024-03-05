@@ -13,7 +13,7 @@ load_dotenv()
 ROADMAP_SPREADSHEET_ID = "1ML4O-1XEMR2OU-G_9JZ_nDo8LhmquILFImpX-pspBgI"
 SAMPLE_RANGE_NAME = "Sheet1!A1:D1"
 
-SCOPES=["https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive"]
+SCOPES=["https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive"]
 
 class SheetsAuth:
   def __init__(self,scopes=SCOPES) -> None:  
@@ -77,7 +77,7 @@ def main():
 
 if __name__ == "__main__":
   # creds=SheetsAuth(scopes=SCOPES).get_credentials()
-  # main()
+  main()
   # print(get_scopes())
-  pass
+  # pass
   

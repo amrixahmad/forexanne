@@ -72,20 +72,7 @@ async def cmi_signals(
         sell_signal=send_signal(sl=sl,tp1=tp1,tp2=tp2,tp3=tp3,max_tp=max_tp,cl=cl,sell=sell)
         await interaction.response.send_message(sell_signal)
 
-@client.event
-async def on_message(message):
-    
-    if message.author==client.user:
-        return
-
-    if message.channel.id==forexanne_channel_id or scalping_coach_id:
-        # print(message.content)
-        # print(message.channel.id)
-        if message.attachments:
-            await message.channel.send(visiongpt_response(message.attachments[0].url,message.content))
-        else:
-            await message.channel.send(chatgpt_response(message.content))
-
+async def journal_gpt(message,channel_ids):
     if any(d['value'] == message.channel.id for d in channel_ids if 'value' in d):
         daily_trades=DailyTrades(creds=SheetsAuth().authorize())
         # Get channel ID and name
@@ -108,5 +95,21 @@ async def on_message(message):
                         journal_entry
                     )
                     await message.channel.send(f"Thank you, {message.author} I have written a journal entry for you :)")
+
+@client.event
+async def on_message(message):
+    
+    if message.author==client.user:
+        return
+
+    if message.channel.id==forexanne_channel_id or scalping_coach_id:
+        # print(message.content)
+        # print(message.channel.id)
+        if message.attachments:
+            await message.channel.send(visiongpt_response(message.attachments[0].url,message.content))
+        else:
+            await message.channel.send(chatgpt_response(message.content))
+
+    
 
 client.run(is_test(test=False))
