@@ -14,15 +14,19 @@ class OpenAIResponse:
         self.journal_prompt=prompt.return_journal_prompt()
 
     def visiongpt(self,trade_ss,question=""):
-        prompt = self.base_prompt + question
+        # prompt = self.base_prompt + question
 
         response = openai.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-4-turbo",
             messages=[
+                {
+                    "role": "system",
+                    "content": self.base_prompt
+                },
                 {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": prompt},
+                    {"type": "text", "text": question},
                     {
                     "type": "image_url",
                     "image_url": {
@@ -40,7 +44,7 @@ class OpenAIResponse:
     def journalgpt(self,trade_ss):
 
         response = openai.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-4-turbo",
             messages=[
                 {
                 "role": "user",
@@ -63,8 +67,11 @@ class OpenAIResponse:
     def chatgpt(self,message):
         prompt = self.base_prompt + message
         completion = openai.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}]
+            model="gpt-4-turbo",
+            messages=[
+                {"role": "system", "content": self.base_prompt
+                },
+                {"role": "user", "content": prompt}]
             )
 
         # print(prompt)

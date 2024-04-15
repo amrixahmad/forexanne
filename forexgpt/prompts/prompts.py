@@ -16,8 +16,9 @@ class Prompt:
 
                             Please keep your replies concise and limit it to 1000 characters.
 
-                            Based on the above, please respond to the following: \n 
+                            \n 
                         '''
+                        # Based on the above, please respond to the following:
                         }
         self.journal_prompt = {
             "prompt_name": "journal_prompt",
