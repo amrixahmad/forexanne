@@ -110,4 +110,4 @@ async def on_message(message):
     # await journal_gpt(message=message,channel_ids=test_channel_ids)
     
 
-client.run(is_test(test=True))
+client.run(is_test(test=False))
