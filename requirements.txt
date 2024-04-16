@@ -23,6 +23,7 @@ httpcore==1.0.2
 httplib2==0.22.0
 httpx==0.26.0
 idna==3.6
+metalpriceapi==1.0.4
 multidict==6.0.5
 oauthlib==3.2.2
 openai==1.11.1

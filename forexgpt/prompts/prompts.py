@@ -1,10 +1,23 @@
 import json
+import config as _conf
+from metalpriceapi.client import Client
+
+def get_live_gold_price():
+    metal_api_client = Client(_conf.METALAPI_API_KEY)
+
+    gold_response=metal_api_client.fetchLive(base='USD', currencies=['XAU'])
+
+    if gold_response["success"]==True:
+        return round(1/float(gold_response["rates"]["XAU"]),2)
+    
+    else:
+        return "there was an error making the api call"
 
 class Prompt:
     def __init__(self) -> None:
         self.base_prompt = {
                 "prompt_name": "base_prompt",
-                "prompt": '''You are a forex trading coach. You focus on trading Gold and your main method is price action. You accept either text questions, screenshots to analyze, or both.
+                "prompt": f'''You are a forex trading coach. You focus on trading Gold and your main method is price action. You accept either text questions, screenshots to analyze, or both.
 
                             Your name is Forex Anne.
 
@@ -16,6 +29,7 @@ class Prompt:
 
                             Please keep your replies concise and limit it to 1000 characters.
 
+                            Always base your recommendations on the current price of gold which is {get_live_gold_price()}
                             \n 
                         '''
                         # Based on the above, please respond to the following:

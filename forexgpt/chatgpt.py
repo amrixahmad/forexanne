@@ -1,11 +1,8 @@
 import openai
 from prompts.prompts import Prompt
-from dotenv import load_dotenv
-import os
+import config as _conf
 
-load_dotenv()
-
-openai.api_key=os.getenv("OPENAI_API_KEY")
+openai.api_key=_conf.OPENAI_API_KEY
 
 class OpenAIResponse:
     def __init__(self):

@@ -3,25 +3,21 @@ from discord.ext import commands
 from discord import app_commands
 from discord import Interaction
 from discord import AllowedMentions
-from dotenv import load_dotenv
-import os
+import config as _conf
 from chatgpt import OpenAIResponse
 from cmi_signals import send_signal
 # from gdrive.dailytrades import DailyTrades,channel_ids,test_channel_ids
 # from gdrive.sheetsauth import SheetsAuth,SCOPES
 
-load_dotenv()
-
 forexanne_channel_id=1202078107046264884
 scalping_coach_id=1199171759392444547
 
 def is_test(test=bool):
-    FOREXANNETEST_TOKEN=os.getenv("FOREXANNETEST_TOKEN")
-    FOREXANNE_TOKEN=os.getenv("FOREXANNE_TOKEN")
+    
     if test:
-        return FOREXANNETEST_TOKEN
+        return _conf.FOREXANNETEST_TOKEN
     else:
-        return FOREXANNE_TOKEN
+        return _conf.FOREXANNE_TOKEN
 
 client = commands.Bot(command_prefix=".",intents=discord.Intents.all())
 chat_response=OpenAIResponse()
